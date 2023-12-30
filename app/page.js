@@ -8,6 +8,8 @@ export default function Home() {
   const [menu, setMenu] = useState(false)
   const [quantity, setQuantity] = useState(1)
   const [image, setImage] = useState('/image-product-1.jpg')
+  const [showCart, setShowCart] = useState(false)
+  const [totalPrice, setTotalPrice] = useState(0)
   
 
   const incrementQuantity = () => {
@@ -24,13 +26,15 @@ export default function Home() {
     setImage(newImage)
   }
 
+  //TODO: fix totalPrice
   const addToCart = () => {
+    setTotalPrice(quantity * 125);
     const newItem = {
       image: '/image-product-1.jpg',
       name: 'Fall Limited Edition Sneakers',
       quantity: quantity,
       price: 125.00,
-      totalPrice: quantity * 125.00
+      totalPrice: totalPrice
     };
   
     setCart(prevCart => {
@@ -48,6 +52,10 @@ export default function Home() {
       }
     });
   };
+
+  const toggleCart = () => {
+    setShowCart(!showCart)
+  }
 
   return (
     <div className='flex flex-col mx-24 h-dvh'>
@@ -71,10 +79,46 @@ export default function Home() {
         </div>
 
         <div id="right-nav" className='flex flex-row gap-12 items-center'>
-          <button id='nav-cart' className='relative w-12 h-12'>
+          <button id='nav-cart' className='relative w-12 h-12' onClick={toggleCart}>
             {cart.length > 0 && (
               <span className=" absolute top-0 right-4 z-10 inline-flex items-center rounded-lg bg-orange-400 px-1 py-0.5 text-xs font-medium text-white">{cart[0].quantity}</span>
             )}
+            {showCart && (
+              <div className='absolute top-12 right-0 w-80 h-64 bg-white rounded-md shadow-lg'>
+                <div className='flex flex-col gap-4'>
+                  <div className='flex justify-start items-center text-sm font-bold border-b-[1px] border-gray-200 p-4 pb-6'>
+                    Cart
+                  </div>
+                  <div className='flex flex-row justify-center items-center'>
+                    <div className='flex flex-row gap-4 items-center'>
+                      {cart.length > 0 ? 
+                      <div className='flex flex-col gap-4'>
+                        {cart.map((item, index) => (
+                          <div key={index} className='flex flex-row gap-2 p-4 items-center'>
+                            <div className='relative w-12 h-12'>
+                              <Image
+                              className='rounded-lg'
+                              src={item.image}
+                              alt="cart"
+                              fill
+                              />
+                            </div>
+                            <div className='flex flex-col gap-1'>
+                              <div className='text-xs text-gray-500'>{item.name}</div>
+                              <div className='flex flex-row gap-2'>
+                              <div className='text-xs text-gray-500'>${item.price}.00 x {item.quantity}</div>
+                              <div className='text-xs'>{item.totalPrice}</div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      :<div className='flex text-sm text-gray-500 justify-center'>Your cart is empty</div>}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              )}
             <Image
               className='z-5'
               src="/icon-cart.svg"
