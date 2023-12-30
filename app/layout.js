@@ -1,7 +1,8 @@
-import { Inter } from 'next/font/google'
+import { Inter, Azeret_Mono } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
+const azeret = Azeret_Mono({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Sneakers',
@@ -11,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={azeret.className}>{children}</body>
     </html>
   )
 }
