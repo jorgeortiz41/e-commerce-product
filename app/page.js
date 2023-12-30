@@ -8,6 +8,7 @@ export default function Home() {
   const [menu, setMenu] = useState(false)
   const [quantity, setQuantity] = useState(1)
   const [image, setImage] = useState('/image-product-1.jpg')
+  const [cartItems, setCartItems] = useState([])
 
   const incrementQuantity = () => {
     setQuantity(quantity + 1);
@@ -37,23 +38,26 @@ export default function Home() {
             />
           </div>
         
-          <button className='text-gray-500 text-sm'>Collections</button>
-          <button className='text-gray-500 text-sm'>Men</button>
-          <button className='text-gray-500 text-sm'>Women</button>
-          <button className='text-gray-500 text-sm'>About</button>
-          <button className='text-gray-500 text-sm'>Contact</button>
+          <button className='text-gray-500 hover:text-gray-700 text-sm border-b-4 border-transparent hover:border-orange-400'>Collections</button>
+          <button className='text-gray-500 hover:text-gray-700 text-sm border-b-4 border-transparent hover:border-orange-400'>Men</button>
+          <button className='text-gray-500 hover:text-gray-700 text-sm border-b-4 border-transparent hover:border-orange-400'>Women</button>
+          <button className='text-gray-500 hover:text-gray-700 text-sm border-b-4 border-transparent hover:border-orange-400'>About</button>
+          <button className='text-gray-500 hover:text-gray-700 text-sm border-b-4 border-transparent hover:border-orange-400'>Contact</button>
         </div>
 
         <div id="right-nav" className='flex flex-row gap-12 items-center'>
-          <button id='nav-cart' className='relative w-6 h-6'>
+          <button id='nav-cart' className='relative w-12 h-12'>
+          <span class=" absolute top-0 right-4 z-10 inline-flex items-center rounded-lg bg-orange-400 px-1 py-0.5 text-xs font-medium text-white">{cartItems.length}</span>
+
             <Image
-              className=''
+              className='z-5'
               src="/icon-cart.svg"
               alt="cart"
-              fill
+              height={24}
+              width={24}
             />
           </button>
-          <button id='nav-cart' className='relative rounded-full w-12 h-12 hover:ring-2 ring-orange-400'>
+          <button id='nav-avatar' className='relative rounded-full w-12 h-12 hover:ring-2 ring-orange-400'>
             <Image
             className='rounded-full'
             src="/image-avatar.png"
@@ -80,7 +84,7 @@ export default function Home() {
           <div id="thumbnails" className='flex flex-row gap-4 justify-between h-1/4'>
             <button id='thumb-1' className='rounded-lg relative w-1/4 h-2/3 focus:ring-2 ring-orange-400 outline-none' onClick={() => changeImage('/image-product-1.jpg')} autoFocus>
               <Image
-              className={`rounded-lg ${image === '/image-product-1.jpg' ? 'opacity-25' : ''}`}
+              className={`rounded-lg ${image === '/image-product-1.jpg' ? 'opacity-25' : ''} hover:opacity-25`}
               src="/image-product-1-thumbnail.jpg"
               alt="Picture of sneakers"
               fill
@@ -88,7 +92,7 @@ export default function Home() {
             </button>
             <button id='thumb-2' className='rounded-lg relative w-1/4 h-2/3 focus:ring-2 ring-orange-400' onClick={() => changeImage('/image-product-2.jpg')}>
               <Image
-              className={`rounded-lg ${image === '/image-product-2.jpg' ? 'opacity-25' : ''}`}
+              className={`rounded-lg ${image === '/image-product-2.jpg' ? 'opacity-25' : ''} hover:opacity-25`}
               src="/image-product-2-thumbnail.jpg"
               alt="Picture of sneakers"
               fill
@@ -96,7 +100,7 @@ export default function Home() {
             </button>
             <button id='thumb-3' className='rounded-lg relative w-1/4 h-2/3 focus:ring-2 ring-orange-400' onClick={() => changeImage('/image-product-3.jpg')}>
               <Image
-              className={`rounded-lg ${image === '/image-product-3.jpg' ? 'opacity-25' : ''}`}
+              className={`rounded-lg ${image === '/image-product-3.jpg' ? 'opacity-25' : ''} hover:opacity-25`}
               src="/image-product-3-thumbnail.jpg"
               alt="Picture of sneakers"
               fill
@@ -104,7 +108,7 @@ export default function Home() {
             </button>
             <button id='thumb-4' className='rounded-lg relative w-1/4 h-2/3 focus:ring-2 ring-orange-400' onClick={() => changeImage('/image-product-4.jpg')}>
               <Image
-              className={`rounded-lg ${image === '/image-product-4.jpg' ? 'opacity-25' : ''}`}
+              className={`rounded-lg ${image === '/image-product-4.jpg' ? 'opacity-25' : ''} hover:opacity-25`}
               src="/image-product-4-thumbnail.jpg"
               alt="Picture of sneakers"
               fill
@@ -126,10 +130,10 @@ export default function Home() {
           <p className='text-sm text-gray-400 line-through'>$250.00</p>
 
           <div className='flex flex-row gap-8 items-center'>
-            <div className='flex flex-row gap-8 items-center h-14 rounded-md bg-gray-100 py-2'>
+            <div className='flex flex-row gap-8 items-center h-14 rounded-md bg-gray-100 py-2 shadow-md'>
               <button className='flex w-12 justify-center' onClick={decrementQuantity}>
                 <Image
-                className=''
+                className='hover:opacity-50'
                 src="/icon-minus.svg"
                 alt="Picture of sneakers"
                 width={20}
@@ -139,7 +143,7 @@ export default function Home() {
               <div className=''>{quantity}</div>
               <button className='flex justify-center w-12' onClick={incrementQuantity}>
                 <Image
-                className=''
+                className='hover:opacity-50'
                 src="/icon-plus.svg"
                 alt="Picture of sneakers"
                 width={20}
@@ -148,7 +152,7 @@ export default function Home() {
               </button>
             </div>
 
-            <div className='flex flex-row gap-4 items-center h-14 px-4 rounded-md bg-orange-400 w-80 justify-center'>
+            <button className='flex flex-row gap-4 items-center h-14 px-4 rounded-md bg-orange-400 w-80 justify-center shadow-lg shadow-orange-400/50 hover:opacity-50'>
                 <Image
                 className=''
                 src="/icon-cart-white.svg"
@@ -157,7 +161,7 @@ export default function Home() {
                 height={20}
                 />
               <div className='text-white text-sm'>Add to cart</div>
-            </div>
+            </button>
           </div>
         </div>
 
