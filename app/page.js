@@ -4,11 +4,11 @@ import Image from 'next/image'
 import { useState } from 'react'
 
 export default function Home() {
-  const [cart, setCart] = useState(false)
+  const [cart, setCart] = useState([])
   const [menu, setMenu] = useState(false)
   const [quantity, setQuantity] = useState(1)
   const [image, setImage] = useState('/image-product-1.jpg')
-  const [cartItems, setCartItems] = useState([])
+  
 
   const incrementQuantity = () => {
     setQuantity(quantity + 1);
@@ -23,6 +23,31 @@ export default function Home() {
   const changeImage = (newImage) => {
     setImage(newImage)
   }
+
+  const addToCart = () => {
+    const newItem = {
+      image: '/image-product-1.jpg',
+      name: 'Fall Limited Edition Sneakers',
+      quantity: quantity,
+      price: 125.00,
+      totalPrice: quantity * 125.00
+    };
+  
+    setCart(prevCart => {
+      const existingItem = prevCart.find(item => item.name === newItem.name);
+      if (existingItem) {
+        // If the item already exists in the cart, update the quantity
+        return prevCart.map(item =>
+          item.name === newItem.name
+            ? { ...item, quantity: item.quantity + newItem.quantity }
+            : item
+        );
+      } else {
+        // If the item does not exist in the cart, add it
+        return [...prevCart, newItem];
+      }
+    });
+  };
 
   return (
     <div className='flex flex-col mx-24 h-dvh'>
@@ -47,8 +72,9 @@ export default function Home() {
 
         <div id="right-nav" className='flex flex-row gap-12 items-center'>
           <button id='nav-cart' className='relative w-12 h-12'>
-          <span class=" absolute top-0 right-4 z-10 inline-flex items-center rounded-lg bg-orange-400 px-1 py-0.5 text-xs font-medium text-white">{cartItems.length}</span>
-
+            {cart.length > 0 && (
+              <span className=" absolute top-0 right-4 z-10 inline-flex items-center rounded-lg bg-orange-400 px-1 py-0.5 text-xs font-medium text-white">{cart[0].quantity}</span>
+            )}
             <Image
               className='z-5'
               src="/icon-cart.svg"
@@ -119,9 +145,9 @@ export default function Home() {
 
         <div id="details" className='flex flex-col gap-4 justify-center w-2/4 '>
           <h2 className='text-orange-400'>Sneaker Company</h2>
-          <h3 className='text-4xl font-bold'>Fall Limited Edition Sneakers</h3>
+          <h3 id='product-name' className='text-4xl font-bold'>Fall Limited Edition Sneakers</h3>
           <p className='text-sm text-gray-500 mt-8'>These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they&apos;ll withstand everything the weather can offer.</p>
-          <div className='flex flex-row gap-4 text-2xl font-bold items-center mt-8'>
+          <div id='price' className='flex flex-row gap-4 text-2xl font-bold items-center mt-8'>
             $125.00
             <div className='flex text-orange-400 text-base bg-orange-50 px-2 rounded-md items-center'>
               50%
@@ -152,7 +178,7 @@ export default function Home() {
               </button>
             </div>
 
-            <button className='flex flex-row gap-4 items-center h-14 px-4 rounded-md bg-orange-400 w-80 justify-center shadow-lg shadow-orange-400/50 hover:opacity-50'>
+            <button className='flex flex-row gap-4 items-center h-14 px-4 rounded-md bg-orange-400 w-80 justify-center shadow-lg shadow-orange-400/50 hover:opacity-50' onClick={addToCart}>
                 <Image
                 className=''
                 src="/icon-cart-white.svg"
