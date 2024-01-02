@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import Nav from './_components/nav'
+import Nav from './_components/Nav'
 
 export default function Home() {
   const [cart, setCart] = useState([])
