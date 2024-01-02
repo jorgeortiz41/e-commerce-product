@@ -185,7 +185,7 @@ export default function Home() {
             </div>
 
             <button
-              className="flex flex-row gap-4 items-center h-14 px-4 rounded-md bg-orange-400 w-64 justify-center shadow-lg shadow-orange-400/50 hover:opacity-50"
+              className="flex flex-row gap-4 items-center h-14 px-4 rounded-lg bg-orange-400 w-64 justify-center shadow-lg shadow-orange-400/50 hover:opacity-50"
               onClick={addToCart}
             >
               <Image
