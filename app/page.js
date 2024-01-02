@@ -43,7 +43,7 @@ export default function Home() {
                 quantity: item.quantity + newItem.quantity,
                 totalPrice: item.totalPrice + newItem.totalPrice,
               }
-            : item
+            : item,
         );
       } else {
         // If the item does not exist in the cart, add it
