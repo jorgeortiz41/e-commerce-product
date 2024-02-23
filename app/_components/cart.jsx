@@ -37,6 +37,7 @@ function Cart({ cart }) {
                       </div>
                     </div>
                     <div>
+                      {/* TODO: Implement remove item function */}
                       <button
                         className="flex justify-center w-4"
                         onClick={removeItem}
